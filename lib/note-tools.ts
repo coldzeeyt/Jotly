@@ -1,0 +1,5 @@
+import type {Note} from './model';
+export function duplicateNote(note:Note):Note{const n=structuredClone(note);n.id=crypto.randomUUID();n.title=(n.title.trim()||'Untitled note').slice(0,293)+' (copy)';n.pinned=false;n.archived=false;n.trashed=false;n.date=new Date().toISOString();if(n.position)n.position={x:Math.min(20000,n.position.x+35),y:Math.min(20000,n.position.y+35)};return n}
+export function noteStats(n:Note){const text=[n.body,...n.items.map(i=>i.text)].join(' ').trim();const words=text?text.split(/\s+/u).length:0;return {words,characters:n.body.length,minutes:Math.max(1,Math.ceil(words/200))}}
+export function noteToMarkdown(n:Note,origin=''){const lines=['# '+(n.title.trim()||'Untitled note'),''];if(n.body)lines.push(n.body,'');if(n.items.length)lines.push(...n.items.map(i=>'- ['+(i.done?'x':' ')+'] '+i.text),'');for(const a of n.attachments){const label=a.name.replace(/[\[\]\n\r]/g,'');const url=new URL(a.url,origin||'http://localhost').href;lines.push((a.type.startsWith('image/')?'!':'')+'['+label+']('+url+')','')}if(n.due)lines.push('Reminder: '+n.due,'');if(n.tags.length)lines.push(n.tags.map(t=>'#'+t).join(' '),'');return lines.join('\n')}
+

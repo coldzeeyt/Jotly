@@ -2,7 +2,11 @@
 
 All your notes. One place.
 
-A responsive notes app with email/password accounts, text notes, photos, videos, voice recording, audio uploads, checklists, folders, tags, pinned notes, reminders on a calendar, search, archive, trash, JSON export, and a three-step tutorial. Free mode provides a draggable canvas with saved card positions, zoom controls, and keyboard movement. Includes animated interactions, reduced-motion support, light/dark themes, and the original Jotly logos.
+Live app: https://jotly.up.railway.app
+
+A responsive notes app with email/password accounts, text notes, photos, videos, voice recording, audio uploads, checklists, folders, tags, pinned notes, reminders on a calendar, search, archive, trash, JSON export, and a three-step tutorial. Additional tools include note colors, safe note duplication, per-note Markdown downloads, a live word count, a Pomodoro timer with customizable focus/break durations, and Uncluttered mode (Settings). The focus timer and display preferences are stored per browser.
+
+Free mode provides a draggable canvas with saved card positions, zoom controls, and keyboard movement. Includes animated interactions, reduced-motion support, light/dark themes, and the original Jotly logos.
 
 ## Stack
 
@@ -41,6 +45,7 @@ Open the Railway HTTPS URL on iPhone or Android. The layout adapts to phones wit
 
 - `public/logo-light.png`: user's transparent black/yellow logo.
 - `public/logo-dark.png`: user's transparent white/yellow logo.
+- public/jotly-mark.png: the user’s yellow spark, used in the footer and generated favicon/iOS/manifest icons.
 - Both assets ship with the app and are served by Railway.
 - User uploads are private and stored on the Railway volume.
 

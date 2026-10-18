@@ -1,0 +1,8 @@
+export type TimerMode='focus'|'short'|'long';
+export type TimerState={mode:TimerMode;remaining:number;endsAt:number|null;completed:number;day:string;finished:boolean;durations:Record<TimerMode,number>};
+export function localDay(){return new Date().toLocaleDateString('en-CA')}
+export function initialTimer(day=localDay()):TimerState{return {mode:'focus',remaining:1500,endsAt:null,completed:0,day,finished:false,durations:{focus:25,short:5,long:15}}}
+export function tickTimer(s:TimerState,now:number,day:string):TimerState{const completed=s.day===day?s.completed:0;if(s.endsAt===null)return s.day===day?s:{...s,day,completed};const remaining=Math.max(0,Math.ceil((s.endsAt-now)/1000));if(remaining===0)return {...s,day,remaining:0,endsAt:null,finished:true,completed:completed+(s.mode==='focus'?1:0)};if(remaining===s.remaining&&day===s.day)return s;return {...s,day,remaining,completed}}
+export function readTimer(value:unknown,now=Date.now(),day=localDay()):TimerState{const fallback=initialTimer(day);if(!value||typeof value!=='object')return fallback;const s=value as TimerState;if(!['focus','short','long'].includes(s.mode)||!s.durations||!['focus','short','long'].every(m=>Number.isInteger(s.durations[m as TimerMode])&&s.durations[m as TimerMode]>=1&&s.durations[m as TimerMode]<=120)||!Number.isFinite(s.remaining)||s.remaining<0||s.remaining>7200||!Number.isInteger(s.completed)||s.completed<0||typeof s.day!=='string'||(s.endsAt!==null&&(!Number.isFinite(s.endsAt)||s.endsAt>now+7200000)))return fallback;return tickTimer({...s,finished:!!s.finished},now,day)}
+export function clockTime(seconds:number){return Math.floor(seconds/60).toString().padStart(2,'0')+':'+(seconds%60).toString().padStart(2,'0')}
+
