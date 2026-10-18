@@ -15,8 +15,10 @@ const upload=await fetch(base+'/api/media',{method:'POST',headers:{Cookie:cookie
 const id=randomUUID();const note={id,title:'Private test note',body:'A thought worth keeping.',kind:'Checklist',folder:f.id,tags:['test'],pinned:true,archived:false,trashed:false,date:new Date().toISOString(),due:'2026-12-25',items:[{id:'1',text:'Keep this private',done:true}],attachments:[attachment]};
 const save=await call('/api/workspace',{note},cookie);assert.equal(save.status,200,await save.clone().text());
 const loaded=await (await call('/api/workspace',undefined,cookie)).json();assert.equal(loaded.notes[0].due,'2026-12-25');assert.equal(loaded.notes[0].items[0].done,true);assert.equal(loaded.folders[0].name,'Test folder');
+const moved=await call('/api/workspace',{action:'layout',id,position:{x:220,y:180}},cookie);assert.equal(moved.status,200);const movedData=await (await call('/api/workspace',undefined,cookie)).json();assert.deepEqual(movedData.notes[0].position,{x:220,y:180});
 const media=await fetch(base+attachment.url,{headers:{Cookie:cookie,Range:'bytes=0-7'}});assert.equal(media.status,206);assert.equal((await media.arrayBuffer()).byteLength,8);
 const second=await call('/api/auth',{action:'signup',name:'Other User',email:'other-'+randomUUID()+'@example.invalid',password});const other=second.headers.get('set-cookie').split(';')[0];
+assert.equal((await call('/api/workspace',{action:'layout',id,position:{x:1,y:1}},other)).status,404);
 const privateWorkspace=await (await call('/api/workspace',undefined,other)).json();assert.equal(privateWorkspace.notes.length,0);assert.equal((await fetch(base+attachment.url,{headers:{Cookie:other}})).status,404);assert.equal((await call('/api/workspace',{note},other)).status,404);
 assert.equal((await call('/api/workspace',{action:'delete',id},cookie)).status,400);
 assert.equal((await call('/api/workspace',{note:{...note,archived:true}},cookie)).status,200);

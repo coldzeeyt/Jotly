@@ -2,7 +2,7 @@
 
 All your notes. One place.
 
-A responsive notes app with email/password accounts, text notes, photos, videos, voice recording, audio uploads, checklists, folders, tags, pinned notes, reminders on a calendar, search, archive, trash, JSON export, and a three-step tutorial. Includes animated interactions, reduced-motion support, light/dark themes, and the original Jotly logos.
+A responsive notes app with email/password accounts, text notes, photos, videos, voice recording, audio uploads, checklists, folders, tags, pinned notes, reminders on a calendar, search, archive, trash, JSON export, and a three-step tutorial. Free mode provides a draggable canvas with saved card positions, zoom controls, and keyboard movement. Includes animated interactions, reduced-motion support, light/dark themes, and the original Jotly logos.
 
 ## Stack
 
@@ -17,7 +17,7 @@ npm ci
 npm run dev
 ```
 
-Open the printed local URL. The home page offers sample notes when signed out. Preview changes are temporary; sign up to save notes. Real data is stored in `.data/`, which is ignored by Git.
+Open the printed local URL. Every workspace starts empty. Text, audio, photos, video, and checklists are called Mediums. Preview changes are temporary; sign up to save notes. Real data is stored in `.data/`, which is ignored by Git.
 
 ```sh
 npm run typecheck
@@ -42,7 +42,7 @@ Open the Railway HTTPS URL on iPhone or Android. The layout adapts to phones wit
 - `public/logo-light.png`: user's transparent black/yellow logo.
 - `public/logo-dark.png`: user's transparent white/yellow logo.
 - Both assets ship with the app and are served by Railway.
-- The signed-out sample photo is hosted by Unsplash. User uploads are private and stored on the Railway volume.
+- User uploads are private and stored on the Railway volume.
 
 ## Current scope
 
